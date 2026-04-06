@@ -1,8 +1,8 @@
 const multer = require("multer");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
 
-const storage = new CloudinaryStorage({
+const storage = new cloudinaryStorage.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "knest_uploads",
