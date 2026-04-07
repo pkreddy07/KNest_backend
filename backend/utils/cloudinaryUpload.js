@@ -1,12 +1,17 @@
 const cloudinary = require("../config/cloudinary");
+const { Readable } = require("stream");
 
-const uploadFile = async (filePath) => {
-  const result = await cloudinary.uploader.upload(filePath, {
-    resource_type: "auto",
-    folder: "knest_notes",
+const uploadFile = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "knest_uploads", resource_type: "auto" },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result.secure_url);
+      }
+    );
+    Readable.from(fileBuffer).pipe(stream);
   });
-
-  return result.secure_url;
 };
 
 module.exports = uploadFile;
