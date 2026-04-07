@@ -45,7 +45,7 @@ exports.uploadNote = async (req, res) => {
       return res.status(400).json({ message: "File required" });
     }
 
-    const fileUrl = await uploadFile(file.path);
+    const fileUrl = await uploadFile(file.buffer);
 
     const [result] = await pool.query(
       `INSERT INTO notes (user_id, title, description, file_url, file_type,allow_public_author)
